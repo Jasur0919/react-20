@@ -1,4 +1,3 @@
-
 // import * as React from 'react';
 // import PropTypes from 'prop-types';
 // import Backdrop from '@mui/material/Backdrop';
@@ -66,8 +65,8 @@
 
 // export default function SpringModal() {
 //   const [open, setOpen] = useState(false);
-//   const [inputValues, setInputValues] = useState({ field1: '', field2: '' });
-//   const [errors, setErrors] = useState({ field1: false, field2: false });
+//   const [inputValues, setInputValues] = useState({ name: '', price: '' });
+//   const [errors, setErrors] = useState({ name: false, price: false });
 
 //   const handleOpen = () => setOpen(true);
 //   const handleClose = () => setOpen(false);
@@ -82,15 +81,15 @@
 
 //   const handleValidation = () => {
 //     let valid = true;
-//     let newErrors = { field1: false, field2: false };
+//     let newErrors = { name: false, price: false };
 
-//     if (inputValues.field1.trim() === '') {
-//       newErrors.field1 = true;
+//     if (inputValues.name.trim() === '') {
+//       newErrors.name = true;
 //       valid = false;
 //     }
 
-//     if (inputValues.field2.trim() === '') {
-//       newErrors.field2 = true;
+//     if (inputValues.price.trim() === '' || isNaN(inputValues.price)) {
+//       newErrors.price = true;
 //       valid = false;
 //     }
 
@@ -101,19 +100,23 @@
 //   const handleSubmit = async () => {
 //     if (handleValidation()) {
 //       try {
-//         const response = await fetch('/api/create-service', {
+//         const response = await fetch('/services', {
 //           method: 'POST',
 //           headers: {
 //             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer YOUR_AUTH_TOKEN',
 //           },
-//           body: JSON.stringify(inputValues),
+//           body: JSON.stringify({
+//             name: inputValues.name,
+//             price: parseFloat(inputValues.price),
+//           }),
 //         });
 
 //         if (response.status === 201) {
 //           console.log('Service created successfully:', inputValues);
 //           handleClose();
 //         } else {
-//           console.error('Failed to create service:', response.status);
+//           console.error('Failed to create service:', response.status, response.statusText);
 //         }
 //       } catch (error) {
 //         console.error('Error creating service:', error);
@@ -154,22 +157,23 @@
 //               Create Service
 //             </Typography>
 //             <TextField
-//               label="Field 1"
-//               name="field1"
-//               value={inputValues.field1}
+//               label="Name"
+//               name="name"
+//               value={inputValues.name}
 //               onChange={handleChange}
-//               error={errors.field1}
-//               helperText={errors.field1 ? 'Name is required' : ''}
+//               error={errors.name}
+//               helperText={errors.name ? 'Name is required' : ''}
 //               fullWidth
 //               margin="normal"
 //             />
 //             <TextField
-//               label="Field 2"
-//               name="field2"
-//               value={inputValues.field2}
+//               label="Price"
+//               name="price"
+//               type="number"
+//               value={inputValues.price}
 //               onChange={handleChange}
-//               error={errors.field2}
-//               helperText={errors.field2 ? 'Price is required' : ''}
+//               error={errors.price}
+//               helperText={errors.price ? 'Price is required and must be a number' : ''}
 //               fullWidth
 //               margin="normal"
 //             />
@@ -310,7 +314,8 @@ export default function SpringModal() {
           console.log('Service created successfully:', inputValues);
           handleClose();
         } else {
-          console.error('Failed to create service:', response.status, response.statusText);
+          const errorData = await response.json();
+          console.error('Failed to create service:', response.status, response.statusText, errorData);
         }
       } catch (error) {
         console.error('Error creating service:', error);
