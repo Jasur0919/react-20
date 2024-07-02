@@ -53,10 +53,10 @@ export default function CustomizedTables() {
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
               
-              <StyledTableCell align="center">{row.name}</StyledTableCell>
+              {/* <StyledTableCell align="center">{row.name}</StyledTableCell>
               <StyledTableCell align="center">{row.calories}</StyledTableCell>
               <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="center">{row.carbs}</StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>
