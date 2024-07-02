@@ -44,82 +44,9 @@ export default function TransitionsModal() {
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Text in a modal
             </Typography>
-            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography> */}
-
-<Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={signInValidationSchema}>
-            {({ isSubmitting }) => (
-              <Form>
-                <Field
-                  name="email"
-                  type="email"
-                  as={TextField}
-                  label="Email address"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={
-                    <ErrorMessage
-                      name="email"
-                      component="span"
-                      className="text-[red] text-[15px]"
-                    />
-                  }
-                />
-                <Field
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  as={TextField}
-                  label="Password"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={
-                    <ErrorMessage
-                      name="password"
-                      component="span"
-                      className="text-[red] text-[15px]"
-                    />
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowPassword(!showPassword)}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <p
-                  className="mb-3 cursor-pointer hover:text-blue-500"
-                  onClick={() => setOpen(true)}
-                >
-                  Parolni unutdingizmi?
-                </p>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  disabled={isSubmitting}
-                  sx={{ marginBottom: "8px" }}
-                >
-                  {isSubmitting ? "Signing" : "Sign In"}
-                </Button>
-                <span
-                  onClick={() => navigate("/sign-up")}
-                  className=" text-blue-300 cursor-pointer hover:text-blue-500"
-                >
-                  Registration
-                </span>
-              </Form>
-            )}
-          </Formik>
+            </Typography>
           </Box>
         </Fade>
       </Modal>

@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Backdrop from '@mui/material/Backdrop';
@@ -64,9 +65,9 @@ const modalStyle = {
 };
 
 export default function SpringModal() {
-  const [open, setOpen] = React.useState(false);
-  const [inputValues, setInputValues] = React.useState({ field1: '', field2: '' });
-  const [errors, setErrors] = React.useState({ field1: false, field2: false });
+  const [open, setOpen] = useState(false);
+  const [inputValues, setInputValues] = useState({ field1: '', field2: '' });
+  const [errors, setErrors] = useState({ field1: false, field2: false });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -97,11 +98,26 @@ export default function SpringModal() {
     return valid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (handleValidation()) {
-      // Perform submit actions
-      console.log('Submitted:', inputValues);
-      handleClose();
+      try {
+        const response = await fetch('/api/create-service', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(inputValues),
+        });
+
+        if (response.status === 201) {
+          console.log('Service created successfully:', inputValues);
+          handleClose();
+        } else {
+          console.error('Failed to create service:', response.status);
+        }
+      } catch (error) {
+        console.error('Error creating service:', error);
+      }
     }
   };
 
@@ -134,8 +150,8 @@ export default function SpringModal() {
       >
         <Fade in={open}>
           <Box sx={modalStyle}>
-            <Typography id="spring-modal-title" variant="h6" component="h2">
-              Enter Verification Code
+            <Typography style={{ textAlign: "center" }} id="spring-modal-title" variant="h6" component="h2">
+              Create Service
             </Typography>
             <TextField
               label="Field 1"
@@ -143,11 +159,20 @@ export default function SpringModal() {
               value={inputValues.field1}
               onChange={handleChange}
               error={errors.field1}
-              helperText={errors.field1 ? 'Field 1 is required' : ''}
+              helperText={errors.field1 ? 'Name is required' : ''}
               fullWidth
               margin="normal"
             />
-
+            <TextField
+              label="Field 2"
+              name="field2"
+              value={inputValues.field2}
+              onChange={handleChange}
+              error={errors.field2}
+              helperText={errors.field2 ? 'Price is required' : ''}
+              fullWidth
+              margin="normal"
+            />
             <Button
               variant="contained"
               color="primary"
